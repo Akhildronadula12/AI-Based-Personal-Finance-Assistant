@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Finance Assistant{% endblock %}</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Bootstrap (for additional UI components) -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <style>
+        /* Right Sidebar (Chatbot) */
+        #chatbotSidebar {
+            width: 350px;
+            height: 100%;
+            position: fixed;
+            right: -350px; /* Initially hidden to the right */
+            top: 0;
+            background-color: #fff;
+            box-shadow: -4px 0 10px rgba(0, 0, 0, 0.2);
+            border-radius: 8px 0 0 8px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            z-index: 1000;
+            transition: right 0.4s ease-in-out; /* Slide-in animation */
+        }
+
+        /* Chatbot Messages Container */
+        #chatbotMessages {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 15px;
+            margin-bottom: 10px;
+            background-color: #f7f7f7;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column; /* Keep messages stacked in order */
+            gap: 10px;
+        }
+
+        /* Individual Message */
+        .userMessage, .aiMessage {
+            max-width: 80%;
+            padding: 10px;
+            border-radius: 12px;
+            margin-bottom: 10px;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .userMessage {
+            background-color: #4caf50;
+            color: white;
+            align-self: flex-end;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .aiMessage {
+            background-color: #f1f1f1;
+            color: #333;
+            align-self: flex-start;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        /* Input Box at the bottom */
+        #userInput {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 14px;
+            width: calc(100% - 20px);
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+
+        /* Send Button */
+        #sendMessage {
+            background-color: #007bff;
+            color: white;
+            padding: 12px;
+            border-radius: 8px;
+            border: none;
+            font-size: 14px;
+            width: 100%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        #sendMessage:hover {
+            background-color: #0056b3;
+        }
+
+        /* Chatbot Toggle Button */
+        #chatbotToggleButton {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            background-color: #007bff;
+            color: white;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 24px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            z-index: 999;
+            transition: all 0.3s ease;
+        }
+
+        #chatbotToggleButton:hover {
+            background-color: #0056b3;
+        }
+
+        /* Fade-in Animation */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Footer Position */
+        footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background: #1a202c;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            z-index: 999;
+        }
+
+        /* Content Resizing when Chatbot is opened */
+        .shift-content {
+            transition: width 0.4s ease-in-out;
+            width: calc(100% - 350px); /* Reduce content width */
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+
+    <!-- Navigation Bar -->
+    <nav id="navbar" class="bg-blue-600 shadow-md p-4 fixed top-0 left-0 w-full z-10">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="/" class="text-white text-xl font-semibold hover:text-gray-300">Finance Assistant</a>
+            <ul class="flex space-x-6">
+                <li><a href="/" class="text-white hover:text-gray-300">Home</a></li>
+                <li><a href="/dashboard" class="text-white hover:text-gray-300">Dashboard</a></li>
+                <li><a href="/expenses" class="text-white hover:text-gray-300">Expenses</a></li>
+                <li><a href="/budget" class="text-white hover:text-gray-300">Budget</a></li>
+                <li><a href="/savings" class="text-white hover:text-gray-300">Savings</a></li>
+                <li><a href="/investments" class="text-white hover:text-gray-300">Investment</a></li>
+                {% if current_user.is_authenticated %}
+                    <li><a href="/logout" class="text-white hover:text-gray-300">Logout</a></li>
+                {% else %}
+                    <li><a href="/login" class="text-white hover:text-gray-300">Login</a></li>
+                    <li><a href="/register" class="text-white hover:text-gray-300">Register</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content Block -->
+    <div id="content" class="container mx-auto mt-20">
+        {% block content %}{% endblock %}
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 Finance Assistant | All Rights Reserved</p>
+    </footer>
+
+    <!-- CSRF Token Meta Tag -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    <!-- Chatbot Right Sidebar (only visible for logged-in users) -->
+    {% if current_user.is_authenticated %}
+    <div id="chatbotSidebar">
+        <div class="flex justify-between items-center mb-4">
+            <h3 class="font-semibold text-xl text-blue-600">Chat with AI</h3>
+            <button id="closeChatbot" class="text-gray-600 hover:text-blue-600">&times;</button>
+        </div>
+        <div id="chatbotMessages">
+            <!-- Messages will be appended here -->
+        </div>
+        <input id="userInput" type="text" class="w-full" placeholder="Ask me something..." />
+        <button id="sendMessage">Send</button>
+    </div>
+
+    <!-- Chatbot Toggle Button -->
+    <div id="chatbotToggleButton" class="flex items-center justify-center">
+        <i class="fas fa-comment-alt text-white mr-0.2"></i>
+        <span class="text-white">AI</span>
+    </div>
+
+    {% endif %}
+
+    <!-- JavaScript -->
+    <script>
+        // Ensure the DOM is fully loaded before adding event listeners
+        document.addEventListener("DOMContentLoaded", function () {
+            const chatbotToggleButton = document.getElementById('chatbotToggleButton');
+            const chatbotSidebar = document.getElementById('chatbotSidebar');
+            const closeChatbot = document.getElementById('closeChatbot');
+            const sendMessage = document.getElementById('sendMessage');
+            const userInput = document.getElementById('userInput');
+            const chatbotMessages = document.getElementById('chatbotMessages');
+            const content = document.getElementById('content');
+
+            // CSRF Token from the meta tag
+            const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+            // Toggle the chatbot sidebar visibility when the button is clicked
+            chatbotToggleButton.addEventListener('click', () => {
+                chatbotSidebar.style.right = '0'; // Slide-in effect
+                content.classList.add('shift-content'); // Resize content width to create space for the chatbot
+            });
+
+            // Close the chatbot sidebar when the close button is clicked
+            closeChatbot.addEventListener('click', () => {
+                chatbotSidebar.style.right = '-350px'; // Slide-out effect
+                content.classList.remove('shift-content'); // Restore content width
+            });
+
+            // Send the user message to Flask backend and get a response
+            sendMessage.addEventListener('click', async () => {
+                const query = userInput.value.trim();
+                if (query) {
+                    appendMessage('You: ' + query, 'userMessage');
+                    userInput.value = '';
+                    userInput.disabled = true;
+                    sendMessage.disabled = true;
+
+                    // Call Flask backend API (assumed to be '/chatbot')
+                    const response = await fetch('/chatbot', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRFToken': csrfToken // Include CSRF token here
+                        },
+                        body: JSON.stringify({ query: query })
+                    });
+
+                    const result = await response.json();
+                    const aiMessage = result.message;
+
+                    appendMessage('AI: ' + aiMessage, 'aiMessage');
+
+                    userInput.disabled = false;
+                    sendMessage.disabled = false;
+                }
+            });
+
+            function appendMessage(message, type) {
+                const messageElement = document.createElement('div');
+                messageElement.classList.add(type);
+                messageElement.textContent = message;
+                chatbotMessages.appendChild(messageElement);
+                chatbotMessages.scrollTop = chatbotMessages.scrollHeight; // Scroll to the bottom
+            }
+        });
+    </script>
+
+    <!-- Bootstrap JS (optional) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

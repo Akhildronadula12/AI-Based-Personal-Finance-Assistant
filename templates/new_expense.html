@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}Add Expense{% endblock %}
+
+{% block content %}
+<h1 class="text-2xl font-semibold mb-4">Add New Expense</h1>
+
+<form method="POST" action="{{ url_for('new_expense') }}">
+    {{ form.hidden_tag() }}
+
+    <div class="mb-4">
+        <label for="category" class="block">Category</label>
+        {{ form.category(class="border rounded p-2 w-full") }}
+    </div>
+
+    <div class="mb-4">
+        <label for="amount" class="block">Amount</label>
+        {{ form.amount(class="border rounded p-2 w-full") }}
+    </div>
+
+    <div>
+        <button type="submit" class="bg-blue-600 text-white p-2 rounded">{{ form.submit.label.text }}</button>
+    </div>
+</form>
+
+{% endblock %}

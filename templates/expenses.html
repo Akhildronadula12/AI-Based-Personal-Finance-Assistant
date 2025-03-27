@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %}Your Expenses - Finance Assistant{% endblock %}
+
+{% block content %}
+<div class="container mx-auto mt-6 fade-in">
+    <h1 class="text-3xl font-bold text-center text-blue-600 mb-6">Your Expenses</h1>
+
+    <a href="{{ url_for('new_expense') }}" class="mb-6 inline-block bg-blue-600 text-white px-6 py-3 rounded-lg shadow-md hover:bg-blue-700 transition">Add New Expense</a>
+    
+    {% if expenses %}
+    <table class="min-w-full bg-white border border-gray-300 rounded-lg shadow-lg">
+        <thead>
+            <tr>
+                <th class="px-6 py-3 text-left text-sm font-semibold text-blue-600">Category</th>
+                <th class="px-6 py-3 text-left text-sm font-semibold text-blue-600">Amount</th>
+                <th class="px-6 py-3 text-left text-sm font-semibold text-blue-600">Date</th>
+                <th class="px-6 py-3 text-center text-sm font-semibold text-blue-600">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for expense in expenses %}
+            <tr>
+                <td class="px-6 py-3 text-sm text-gray-700">{{ expense.category }}</td>
+                <td class="px-6 py-3 text-sm text-gray-700">${{ expense.amount }}</td>
+                <td class="px-6 py-3 text-sm text-gray-700">{{ expense.date.strftime('%Y-%m-%d') }}</td>
+                <td class="px-6 py-3 text-center">
+                    <a href="{{ url_for('edit_expense', id=expense.id) }}" class="text-blue-600 hover:text-blue-700">Edit</a> |
+                    <a href="{{ url_for('delete_expense', id=expense.id) }}" class="text-red-600 hover:text-red-700">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p class="text-center text-lg text-gray-600">You have no expenses recorded yet.</p>
+    {% endif %}
+</div>
+{% endblock %}

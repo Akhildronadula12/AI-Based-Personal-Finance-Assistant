@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block title %}Home - Finance Assistant{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="text-center py-16 bg-blue-500 text-white fade-in">
+    <h1 class="text-4xl font-bold">Take Control of Your Finances</h1>
+    <p class="mt-3 text-lg">Track your expenses, set budgets, and invest smartly with AI-powered insights.</p>
+    <a href="/register" class="mt-5 inline-block bg-white text-blue-600 px-6 py-3 rounded-lg shadow-md hover:bg-gray-200 transition">
+        Get Started for Free
+    </a>
+</section>
+
+<!-- Features Section -->
+<section class="container mx-auto py-12">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- Feature 1 -->
+        <div class="bg-white p-6 shadow-lg rounded-lg transform hover:scale-105 transition">
+            <h2 class="text-xl font-semibold text-blue-600">💰 Expense Tracking</h2>
+            <p class="mt-2 text-gray-600">Manually input or upload receipts to automatically track and categorize your expenses.</p>
+        </div>
+
+        <!-- Feature 2 -->
+        <div class="bg-white p-6 shadow-lg rounded-lg transform hover:scale-105 transition">
+            <h2 class="text-xl font-semibold text-blue-600">📊 Smart Budgeting</h2>
+            <p class="mt-2 text-gray-600">Receive personalized budget recommendations based on your spending habits.</p>
+        </div>
+
+        <!-- Feature 3 -->
+        <div class="bg-white p-6 shadow-lg rounded-lg transform hover:scale-105 transition">
+            <h2 class="text-xl font-semibold text-blue-600">📈 Investment Insights</h2>
+            <p class="mt-2 text-gray-600">Get AI-driven investment suggestions tailored to your financial goals.</p>
+        </div>
+    </div>
+</section>
+
+<!-- Call to Action -->
+<section class="text-center py-12 bg-gray-100 fade-in">
+    <h2 class="text-2xl font-bold">Start Your Financial Journey Today</h2>
+    <p class="mt-2 text-gray-600">Sign up now and take the first step towards financial freedom.</p>
+    <a href="/register" class="mt-4 inline-block bg-blue-600 text-white px-6 py-3 rounded-lg shadow-md hover:bg-blue-700 transition">
+        Create an Account
+    </a>
+</section>
+{% endblock %}

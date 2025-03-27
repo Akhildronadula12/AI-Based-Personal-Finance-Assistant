@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block title %}Edit Savings Plan{% endblock %}
+
+{% block content %}
+<div class="container mx-auto mt-6">
+    <h1 class="text-3xl font-bold text-center text-blue-600 mb-6">Edit Savings Plan</h1>
+    
+    <form method="POST" action="{{ url_for('edit_savings_plan', id=savings_plan.id) }}">
+        {{ form.hidden_tag() }}
+        
+        <div class="mb-4">
+            <label for="goal_name" class="block text-gray-700">Goal Name</label>
+            {{ form.goal_name(class="border border-gray-300 p-2 w-full") }}
+            {% for error in form.goal_name.errors %}
+                <span class="text-red-500">{{ error }}</span>
+            {% endfor %}
+        </div>
+
+        <div class="mb-4">
+            <label for="target_amount" class="block text-gray-700">Target Amount</label>
+            {{ form.target_amount(class="border border-gray-300 p-2 w-full") }}
+            {% for error in form.target_amount.errors %}
+                <span class="text-red-500">{{ error }}</span>
+            {% endfor %}
+        </div>
+
+        <div class="mb-4">
+            <label for="saved_amount" class="block text-gray-700">Saved Amount</label>
+            {{ form.saved_amount(class="border border-gray-300 p-2 w-full") }}
+            {% for error in form.saved_amount.errors %}
+                <span class="text-red-500">{{ error }}</span>
+            {% endfor %}
+        </div>
+
+        <div>
+            {{ form.submit(class="bg-blue-600 text-white p-2 rounded") }}
+        </div>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard - Finance Assistant{% endblock %}
+
+{% block content %}
+<div class="container mx-auto mt-6 fade-in">
+    <!-- Welcome Message -->
+    <div class="text-center mb-6">
+        <h1 class="text-3xl font-bold text-blue-600">Welcome, {{ username }}</h1>
+        <p class="mt-2 text-lg text-gray-600">Here's your financial summary and insights.</p>
+    </div>
+
+    <!-- Financial Summary -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <!-- Total Expenses -->
+        <div class="bg-white p-6 shadow-lg rounded-lg text-center">
+            <h2 class="text-xl font-semibold text-blue-600">Total Expenses</h2>
+            <p class="mt-2 text-gray-600">${{ total_expenses }}</p>
+        </div>
+
+        <!-- Total Budget -->
+        <div class="bg-white p-6 shadow-lg rounded-lg text-center">
+            <h2 class="text-xl font-semibold text-blue-600">Total Budget</h2>
+            <p class="mt-2 text-gray-600">${{ total_budget_used }}</p>
+        </div>
+
+        <!-- Total Savings Progress -->
+        <div class="bg-white p-6 shadow-lg rounded-lg text-center">
+            <h2 class="text-xl font-semibold text-blue-600">Total Savings</h2>
+            <p class="mt-2 text-gray-600">${{ total_savings }} of ${{ total_savings_goal }}</p>
+        </div>
+
+        <!-- Total Investments -->
+        <div class="bg-white p-6 shadow-lg rounded-lg text-center">
+            <h2 class="text-xl font-semibold text-blue-600">Total Investments</h2>
+            <p class="mt-2 text-gray-600">${{ total_investment }}</p>
+        </div>
+    </div>
+
+    <!-- Expense Distribution Chart -->
+    <div class="bg-white p-6 shadow-lg rounded-lg">
+        <h2 class="text-2xl font-semibold text-center text-blue-600 mb-4">Expense Distribution</h2>
+        <div class="text-center">
+            <img src="data:image/png;base64,{{ pie_chart }}" alt="Expense Distribution Chart" class="mx-auto">
+        </div>
+    </div>
+</div>
+{% endblock %}

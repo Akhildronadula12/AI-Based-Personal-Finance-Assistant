@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block title %}My Budgets{% endblock %}
+
+{% block content %}
+<div class="container mx-auto mt-6 fade-in">
+    <h1 class="text-3xl font-bold text-center text-blue-600 mb-6">My Budgets</h1>
+
+    <a href="{{ url_for('new_budget') }}" class="mb-6 inline-block bg-blue-600 text-white px-6 py-3 rounded-lg shadow-md hover:bg-blue-700 transition">Create New Budget</a>
+
+    {% if budgets %}
+    <table class="min-w-full bg-white border border-gray-300 rounded-lg shadow-lg">
+        <thead>
+            <tr>
+                <th class="px-6 py-3 text-left text-sm font-semibold text-blue-600">Category</th>
+                <th class="px-6 py-3 text-left text-sm font-semibold text-blue-600">Limit Amount</th>
+                <th class="px-6 py-3 text-center text-sm font-semibold text-blue-600">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for budget in budgets %}
+            <tr>
+                <td class="px-6 py-3 text-sm text-gray-700">{{ budget.category }}</td>
+                <td class="px-6 py-3 text-sm text-gray-700">${{ budget.limit_amount }}</td>
+                <td class="px-6 py-3 text-center">
+                    <a href="{{ url_for('edit_budget', id=budget.id) }}" class="text-blue-600 hover:text-blue-700">Edit</a> |
+                    <a href="{{ url_for('delete_budget', id=budget.id) }}" class="text-red-600 hover:text-red-700">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p class="text-center text-lg text-gray-600">You have no budgets set yet.</p>
+    {% endif %}
+</div>
+{% endblock %}

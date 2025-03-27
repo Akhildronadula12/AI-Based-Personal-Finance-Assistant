@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block title %}Sign Up - Finance Assistant{% endblock %}
+
+{% block content %}
+<div class="flex justify-center items-center min-h-screen fade-in">
+    <div class="bg-white p-8 shadow-lg rounded-lg max-w-md w-full">
+        <h2 class="text-2xl font-bold text-center text-blue-600">Create an Account</h2>
+        <p class="text-gray-600 text-center mt-2">Sign up to manage your finances efficiently.</p>
+        
+        <!-- Signup Form -->
+        <form action="{{ url_for('register') }}" method="POST" class="mt-6">
+            <!-- CSRF Token (Optional if using Flask-WTF) -->
+            {{ form.hidden_tag() }}
+
+            <!-- Full Name -->
+            <div class="mb-4">
+                <label for="name" class="block text-gray-700 font-semibold">Full Name</label>
+                <input type="text" name="name" id="name" required
+                    class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+            </div>
+
+            <!-- Email -->
+            <div class="mb-4">
+                <label for="email" class="block text-gray-700 font-semibold">Email</label>
+                <input type="email" name="email" id="email" required
+                    class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+            </div>
+
+            <!-- Password -->
+            <div class="mb-4">
+                <label for="password" class="block text-gray-700 font-semibold">Password</label>
+                <input type="password" name="password" id="password" required
+                    class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+            </div>
+
+            <!-- Confirm Password -->
+            <div class="mb-4">
+                <label for="confirm_password" class="block text-gray-700 font-semibold">Confirm Password</label>
+                <input type="password" name="confirm_password" id="confirm_password" required
+                    class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit"
+                class="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition">
+                Sign Up
+            </button>
+        </form>
+
+        <!-- Already have an account? -->
+        <p class="text-center text-gray-600 mt-4">
+            Already have an account? <a href="{{ url_for('login') }}" class="text-blue-600 hover:underline">Log in</a>
+        </p>
+    </div>
+</div>
+{% endblock %}

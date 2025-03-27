@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block title %}My Savings Plans{% endblock %}
+
+{% block content %}
+<div class="container mx-auto mt-6">
+    <h1 class="text-3xl font-bold text-center text-blue-600 mb-6">My Savings Plans</h1>
+    
+    <a href="{{ url_for('new_savings_plan') }}" class="mb-6 inline-block bg-blue-600 text-white px-6 py-3 rounded-lg shadow-md hover:bg-blue-700 transition">Create New Savings Plan</a>
+    
+    {% if savings_plans %}
+    <table class="min-w-full bg-white border border-gray-300 rounded-lg shadow-lg">
+        <thead>
+            <tr>
+                <th class="px-6 py-3 text-left text-sm font-semibold text-blue-600">Goal Name</th>
+                <th class="px-6 py-3 text-left text-sm font-semibold text-blue-600">Target Amount</th>
+                <th class="px-6 py-3 text-left text-sm font-semibold text-blue-600">Saved Amount</th>
+                <th class="px-6 py-3 text-center text-sm font-semibold text-blue-600">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for plan in savings_plans %}
+            <tr>
+                <td class="px-6 py-3 text-sm text-gray-700">{{ plan.goal_name }}</td>
+                <td class="px-6 py-3 text-sm text-gray-700">${{ plan.target_amount }}</td>
+                <td class="px-6 py-3 text-sm text-gray-700">${{ plan.saved_amount }}</td>
+                <td class="px-6 py-3 text-center">
+                    <a href="{{ url_for('edit_savings_plan', id=plan.id) }}" class="text-blue-600 hover:text-blue-700">Edit</a> |
+                    <form action="{{ url_for('delete_savings_plan', id=plan.id) }}" method="POST" style="display:inline;">
+                        <button type="submit" class="text-red-600 hover:text-red-700">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p class="text-center text-lg text-gray-600">You have no savings plans yet.</p>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block title %}Login - Finance Assistant{% endblock %}
+
+{% block content %}
+<div class="flex justify-center items-center min-h-screen fade-in">
+    <div class="bg-white p-8 shadow-lg rounded-lg max-w-md w-full">
+        <h2 class="text-2xl font-bold text-center text-blue-600">Welcome Back</h2>
+        <p class="text-gray-600 text-center mt-2">Log in to access your financial dashboard.</p>
+
+        <!-- Login Form -->
+        <form action="{{ url_for('login') }}" method="POST" class="mt-6">
+            <!-- CSRF Token (Optional if using Flask-WTF) -->
+            {{ form.hidden_tag() }}
+
+            <!-- Email -->
+            <div class="mb-4">
+                <label for="email" class="block text-gray-700 font-semibold">Email</label>
+                <input type="email" name="email" id="email" required
+                    class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+            </div>
+
+            <!-- Password -->
+            <div class="mb-4">
+                <label for="password" class="block text-gray-700 font-semibold">Password</label>
+                <input type="password" name="password" id="password" required
+                    class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+            </div>
+
+            <!-- Remember Me Checkbox -->
+            <div class="mb-4 flex items-center">
+                <input type="checkbox" name="remember" id="remember"
+                    class="mr-2 focus:ring-blue-500">
+                <label for="remember" class="text-gray-700">Remember Me</label>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit"
+                class="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition">
+                Log In
+            </button>
+        </form>
+
+        <!-- Forgot Password & Signup Links -->
+        <div class="text-center mt-4">
+            <a href="#" class="text-blue-600 hover:underline">Forgot Password?</a>
+            <p class="text-gray-600 mt-2">
+                Don't have an account? <a href="{{ url_for('register') }}" class="text-blue-600 hover:underline">Sign Up</a>
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}

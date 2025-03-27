@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}Delete Expense{% endblock %}
+
+{% block content %}
+<h1 class="text-2xl font-semibold mb-4">Are you sure you want to delete this expense?</h1>
+
+<p>Category: {{ expense.category }}</p>
+<p>Amount: {{ expense.amount }}</p>
+
+<!-- Make sure the form contains the CSRF token -->
+<form method="POST" action="{{ url_for('delete_expense', id=expense.id) }}">
+    {{ form.hidden_tag() }}  <!-- CSRF token -->
+    <div>
+        <button type="submit" class="bg-red-600 text-white p-2 rounded">Delete</button>
+        <a href="{{ url_for('expenses') }}" class="ml-4 text-blue-600">Cancel</a>
+    </div>
+</form>
+{% endblock %}
