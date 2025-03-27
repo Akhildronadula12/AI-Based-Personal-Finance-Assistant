@@ -127,37 +127,37 @@ The solution incorporates **Mistral AI** to enhance data analysis and generate i
 
 ## 8. Tasks
 
-### **US11.1: Implement Expense Tracking Module (#201)**
+### **1: Implement Expense Tracking Module **
 - Capture expense details from manual entries and receipts.
 - Implement AI-based expense categorization.
 - Develop anomaly detection for unusual spending.
 - Integrate financial data APIs for real-time expense tracking.
 
-### **US12.2: Build Budgeting Recommendation System (#202)**
+### **2: Build Budgeting Recommendation System**
 - Analyze historical spending and generate budget plans.
 - Implement AI-driven dynamic budget adjustments.
 - Develop alerts for overspending.
 - Offer scenario-based budgeting insights.
 
-### **US12.3: Create Savings Plan Generator (#203)**
+### **3: Create Savings Plan Generator**
 - Develop a savings plan creation feature.
 - Implement AI-driven savings recommendations.
 - Track savings progress with milestone notifications.
 - Generate periodic savings reports.
 
-### **US12.4: Provide Investment Insights (#204)**
+### **4: Provide Investment Insights**
 - Assess user risk profile and provide investment recommendations.
 - Integrate real-time market data.
 - Implement AI-driven risk analysis.
 - Provide alerts for market changes.
 
-### **US12.5: Develop Data Visualization Module (#205)**
+### **5: Develop Data Visualization Module**
 - Create interactive charts for tracking financial data.
 - Implement AI-based insights and trend detection.
 - Provide scenario-based financial simulations.
 - Ensure user-friendly visualizations and downloadable reports.
 
-### **US12.6: Implement Data Security and Compliance (#206)**
+### **6: Implement Data Security and Compliance**
 - Encrypt financial data for security.
 - Implement multi-factor authentication (MFA).
 - Ensure GDPR, CCPA compliance.
